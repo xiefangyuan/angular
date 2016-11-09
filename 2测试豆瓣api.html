@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+
+</body>
+<script src="node_modules/angular/angular.js"></script>
+<script>
+    //创建模块和控制器
+    var app=angular.module('myApp',[]);
+    app.controller('myCtrl',function ($scope,$http) {
+        //jsonp的方式实现跨域
+        // 成功的数据返回.jsonp('https://angularjs.org/greet.php?callback=JSON_CALLBACK&name=Super%20Hero')
+        $http.jsonp('https://api.douban.com/v2/book/1220562?callback=JSON_CALLBACK')
+                .then(function (data) {
+                    console.log('成功的返回');
+                    console.log(data);
+                },function (data) {
+                    console.log('失败的返回');
+                    console.log(data);
+                });
+        //因为豆瓣不支持Access-Control-Allow-Origin 跨域
+//        $http({
+//            method: 'GET',//发送get请求
+//            url: 'https://api.douban.com/v2/book/1220562',
+//        }).then(function successCallback (data) {
+//            //成功的回调函数
+//            console.log('successCallback');
+//            console.log(data);
+//            $scope.jsonData=data;
+//        },function errorCallback(data) {
+//            //失败的回调函数
+//            console.log('errorCallback');
+//            console.log(data);
+//        })
+    })
+</script>
+</html>

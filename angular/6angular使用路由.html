@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<!--4划定angular的管理范围-->
+<body ng-app="myApp">
+    <ul>
+        <li><a href="#/my">我的音乐</a></li>
+        <li><a href="#/friend/">朋友</a></li>
+        <li><a href="#/friend/1">朋友1</a></li>
+        <li><a href="#/friend/asdsadfasdfsdf3">朋友3</a></li>
+        <li><a href="#/百度">百度</a></li>
+        <li><a href="#/传智">传智</a></li>
+        <li><a href="#/mycontroller">mycontroller</a></li>
+        <li><a href="#/mytemplate">mytemplate</a></li>
+    </ul>
+    <!--5写ng-view，你的页面内容展示的区域-->
+    <div ng-view>
+
+    </div>
+</body>
+<!--1引用angular和路由包-->
+<script src="./node_modules/angular/angular.js"></script>
+<script src="./node_modules/angular-route/angular-route.js"></script>
+<script>
+    <!--2创建模块-->
+    var app=angular.module('myApp',['ngRoute']);
+
+    //3写路由表
+    //通过config来配置你的路由表
+    //$routeProvider用他来配置路由表
+    app.config(function($routeProvider){
+        $routeProvider.when('/my',{
+            template:'<h1>到了几层</h1>'
+        }).when('/传智',{
+            template:'<h1>{{name}}</h1>',
+            controller:'myCtrl'
+        })
+        .when('/friend/:n?',{
+            template:'<h1>{{name}}</h1>',
+            controller:function ($scope) {
+                     //有控制器名称的用法
+                         $scope.name='朋友1';
+                 }
+        }) .when('/friend2',{
+            templateUrl:'1.html',
+            controller:function ($scope) {
+                     //有控制器名称的用法
+                         $scope.name='朋友2';
+                 }
+        }).otherwise({
+             redirectTo:'/my'
+
+        })
+
+
+    })
+  
+    app.controller('myCtrl',function ($scope) {
+        //有控制器名称的用法
+        $scope.name='朋友';
+    });
+     /*  app.controller('myCtrl1',function ($scope) {
+        //有控制器名称的用法
+        $scope.name='朋友1';
+    });*/
+    app.controller('myCtrl2',function ($scope) {
+        //有控制器名称的用法
+        $scope.name='这是从html模板中获取的数据';
+    });
+</script>
+</html>

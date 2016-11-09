@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+    <pre>
+        {{jsonData|json}}
+    </pre>
+</body>
+<script src="node_modules/angular/angular.js"></script>
+<script>
+    var app=angular.module('myApp',[]);
+    app.controller('myCtrl',function ($http,$scope) {
+        //发送get数据请求
+
+
+$http(
+{
+    method: 'GET',//发送get请求
+    url: 'http://apis.baidu.com/apistore/weatherservice/recentweathers?cityname=北京&cityid=101010300',
+    headers:{
+        'apikey':'8a8efad7ed263d1b8cac9e3354fc16b5'//你的key
+    }
+}
+    ).then(function(data){
+        $scope.jsonData=data;
+               console.log(data);
+    },function(data){
+            console.log(data);
+
+    })
+
+
+
+    })
+</script>
+</html>
